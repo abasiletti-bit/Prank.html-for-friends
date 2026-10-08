@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CRITICAL SYSTEM ALERT</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: black;
+            color: #00ff00;
+            font-family: 'Courier New', Courier, monospace;
+            padding: 20px;
+            overflow: hidden;
+            user-select: none;
+            width: 100vw;
+            height: 100vh;
+        }
+
+        #terminal {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+        }
+
+        .line {
+            margin-bottom: 6px;
+            white-space: pre-wrap;
+            font-size: 16px;
+            line-height: 1.4;
+        }
+
+        .danger {
+            color: #ff3333;
+            font-weight: bold;
+            animation: blink 0.8s infinite alternate;
+        }
+
+        .success {
+            color: #33ff33;
+        }
+
+        .warning {
+            color: #ffcc00;
+        }
+
+        /* Schermata finale dello scherzo stile avviso governativo */
+        #joke-box {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-color: #0a0a0a;
+            color: white;
+            text-align: center;
+            z-index: 10000;
+            font-family: sans-serif;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .emoji-alert {
+            font-size: 80px;
+            margin-bottom: 20px;
+            animation: pulse 1s infinite alternate;
+        }
+
+        #joke-box h1 {
+            font-size: 3.5rem;
+            color: #ff0055;
+            margin-bottom: 15px;
+            text-shadow: 0 0 15px rgba(255, 0, 85, 0.5);
+        }
+
+        #joke-box p {
+            font-size: 1.4rem;
+            color: #ccc;
+            max-width: 600px;
+            margin-bottom: 35px;
+            line-height: 1.6;
+        }
+
+        #joke-box button {
+            background-color: #ff0055;
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            cursor: pointer;
+            border-radius: 30px;
+            box-shadow: 0 5px 15px rgba(255, 0, 85, 0.4);
+            transition: 0.3s;
+        }
+
+        #joke-box button:hover {
+            background-color: #ff3377;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(255, 0, 85, 0.6);
+        }
+
+        /* Animazioni esterne */
+        @keyframes blink {
+            from {
+                opacity: 1;
+            }
+
+            to {
+                opacity: 0.6;
+            }
+        }
+
+        @keyframes pulse {
+            from {
+                transform: scale(1);
+            }
+
+            to {
+                transform: scale(1.1);
+            }
+        }
+
+        /* Messaggio iniziale per forzare il click */
+        #click-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            color: #00ff00;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 10001;
+            font-size: 20px;
+            cursor: pointer;
+            text-align: center;
+            padding: 20px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Schermata per costringere l'utente a cliccare (necessaria per sbloccare audio e fullscreen) -->
+    <div id="click-overlay" onclick="startPrank()">
+        <div>
+            <p class="danger">⚠️ ATTENZIONE: Rilevato Errore di Sicurezza nel Browser ⚠️</p>
+            <p style="color: #fff; margin-top: 15px; font-size: 16px;">Clicca in un punto qualsiasi per avviare la
+                diagnostica e tentare il ripristino...</p>
+        </div>
+    </div>
+
+    <div id="terminal"></div>
+
+    <div id="joke-box">
+        <div class="emoji-alert">😜</div>
+        <h1>CI SEI CASCATO IN PIENO!</h1>
+        <p>Tranquillo, nessun pirata informatico ha toccato il tuo computer. È solo una stupida pagina web creata per
+            farti uno scherzo!</p>
+        <button onclick="exitPrank()">Ripristina Sistema</button>
+    </div>
+
+    <script>
+        const terminal = document.getElementById('terminal');
+        const jokeBox = document.getElementById('joke-box');
+        const overlay = document.getElementById('click-overlay');
+
+        // Genera info dinamiche reali basate sul browser della vittima per spaventarla di più
+        const userAgent = navigator.userAgent;
+        const platform = navigator.platform;
+
+        const logs = [
+            "INITIALIZING BACKDOOR EXPLOIT...",
+            `TARGET SYSTEM DETECTED: ${platform}`,
+            `TARGET ENVIRONMENT: ${userAgent.substring(0, 60)}...`,
+            "ESTABLISHING SECURE TUNNEL VIA PROXY... DONE.",
+            "BYPASSING KERNEL LEVEL SECURITY... [SUCCESS]",
+            "DECRYPTING SECURITY CERTIFICATES... 100%",
+            "INJECTING PAYLOAD: Trojan.Ransomware.CryptoWall...",
+            "WARNING: ANOMALOUS ACTIVITY DETECTED BY HOST DISK...",
+            "CORRUPTING LOCAL DEFENDER DATABASE... [OK]",
+            "ACCESSING DIRECTORIES: C:\\Users\\Administrator\\Documents\\...",
+            "COMPROMISING CREDENTIALS FROM GOOGLE CHROME & FIREFOX...",
+            "DOWNLOADING WALLET.DAT AND CRYPTO KEYS...",
+            "DOWNLOADING SAVED PASSWORDS: [████████████████████] 100%",
+            "ERRORE CRITICO: MEMORIA RAM SOVRACCARICA.",
+            "INIZIALIZZAZIONE CRITTOGRAFIA FILE LOCALI (AES-256)...",
+            "WARNING: TUTTI I FILE SONO STATI CIFRATI CON SUCCESSO.",
+            "INVIANDO CHIAVE DI SBLOCCO AL SERVER REMOTO [TOR NETWORK]...",
+            "DISPOSITIVO COMPLETAMENTE COMPROMESSO."
+        ];
+
+        let currentLine = 0;
+        let audioCtx = null;
+
+        // Funzione per generare suoni elettronici sintetizzati (Beep) senza file audio esterni
+        function playBeep(frequency, duration, type) {
+            try {
+                if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                const oscillator = audioCtx.createOscillator();
+                const gainNode = audioCtx.createGain();
+
+                oscillator.type = type || 'sine';
+                oscillator.frequency.value = frequency;
+                gainNode.gain.setValueAtTime(0.1, audioCtx.currentTime); // Volume basso per non stordire
+
+                oscillator.connect(gainNode);
+                gainNode.connect(audioCtx.destination);
+
+                oscillator.start();
+                setTimeout(() => oscillator.stop(), duration);
+            } catch (e) { console.log("Audio bloccato o non supportato"); }
+        }
+
+        // Forza la modalità Schermo Intero
+        function launchFullScreen(element) {
+            if (element.requestFullscreen) { element.requestFullscreen(); }
+            else if (element.mozRequestFullScreen) { element.mozRequestFullScreen(); }
+            else if (element.webkitRequestFullscreen) { element.webkitRequestFullscreen(); }
+            else if (element.msRequestFullscreen) { element.msRequestFullscreen(); }
+        }
+
+        function startPrank() {
+            // Nasconde l'overlay iniziale e attiva il fullscreen
+            overlay.style.display = 'none';
+            launchFullScreen(document.documentElement);
+
+            // Avvia la digitazione finta
+            setTimeout(typeLog, 500);
+        }
+
+        function typeLog() {
+            if (currentLine < logs.length) {
+                const p = document.createElement('p');
+                p.className = 'line';
+
+                // Gestione colori e suoni in base alla gravità del testo
+                if (logs[currentLine].includes("WARNING") || logs[currentLine].includes("ERRORE") || logs[currentLine].includes("COMPROMESSO")) {
+                    p.className += ' danger';
+                    playBeep(180, 250, 'sawtooth'); // Suono di errore grave e cupo
+                } else if (logs[currentLine].includes("SUCCESS") || logs[currentLine].includes("[OK]")) {
+                    p.className += ' success';
+                    playBeep(880, 50, 'sine'); // Click leggero positivo
+                } else {
+                    playBeep(600, 30, 'sine'); // Suono classico di battitura testo
+                }
+
+                p.textContent = ">> " + logs[currentLine];
+                terminal.appendChild(p);
+
+                // Autoscroll continuo
+                window.scrollTo(0, document.body.scrollHeight);
+
+                currentLine++;
+                // Velocità randomica realistica
+                setTimeout(typeLog, Math.random() * 500 + 250);
+            } else {
+                // Fine log: schermata finale dopo 2 secondi
+                setTimeout(() => {
+                    terminal.style.display = 'none';
+                    jokeBox.style.display = 'flex';
+                    playBeep(440, 500, 'triangle');
+                }, 2000);
+            }
+        }
+
+        function exitPrank() {
+            // Esci dal fullscreen se attivo
+            if (document.exitFullscreen) { document.exitFullscreen(); }
+            // Ricarica la pagina per resettare tutto
+            location.reload();
+        }
+    </script>
+</body>
+
+</html>
